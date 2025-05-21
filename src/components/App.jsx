@@ -1,68 +1,80 @@
 import React, { useState } from 'react';
 
-const competenciesSample = [
-  {
-    strand: "Safety and Health Knowledge and Skills",
-    competencies: [
-      {
-        id: "RAT-SH-01",
-        description: "Demonstrate proper use of personal protective equipment (PPE).",
-      },
-      {
-        id: "RAT-SH-02",
-        description: "Identify and mitigate workplace hazards.",
-      },
-    ],
-  },
-  {
-    strand: "Technical Knowledge and Skills",
-    competencies: [
-      {
-        id: "RAT-TK-01",
-        description: "Program and operate robotic systems.",
-      },
-      {
-        id: "RAT-TK-02",
-        description: "Integrate sensors and actuators in automation systems.",
-      },
-    ],
-  },
+const programs = [
+  'Auto Technology', 'Metal Fabrication', 'Cosmetology', 'Culinary Arts',
+  'Carpentry', 'Electrical', 'HVAC', 'Plumbing', 'Medical Assisting',
+  'TV & Radio Broadcasting', 'Marketing', 'Graphic Communications',
+  'Computer Info Systems', 'Dental Assisting', 'Robotics', 'Criminal Justice',
+  'Early Education & Child Care', 'Environmental Science', 'Engineering'
 ];
 
+const sampleCompetencies = {
+  'Graphic Communications': [
+    { id: 'GC-01', description: 'Operate digital printing equipment safely.' },
+    { id: 'GC-02', description: 'Apply design principles in Adobe Illustrator.' }
+  ],
+  'Auto Technology': [
+    { id: 'AT-01', description: 'Perform routine oil and filter change.' },
+    { id: 'AT-02', description: 'Diagnose engine warning lights.' }
+  ]
+};
+
 export default function App() {
-  const [studentName, setStudentName] = useState("");
+  const [studentName, setStudentName] = useState('');
+  const [program, setProgram] = useState('');
   const [progress, setProgress] = useState({});
 
-  const updateProgress = (id, value) => {
-    setProgress({ ...progress, [id]: value });
+  const handleSave = () => {
+    console.log({
+      studentName,
+      program,
+      progress
+    });
+    alert('Progress saved to console (Google Sheets coming soon)');
+  };
+
+  const handleNoteChange = (id, note) => {
+    setProgress(prev => ({ ...prev, [id]: note }));
   };
 
   return (
-    <div style={{ padding: 20, fontFamily: 'sans-serif' }}>
+    <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
       <h1>CTE Competency Tracker</h1>
       <input
         placeholder="Enter student name"
         value={studentName}
         onChange={(e) => setStudentName(e.target.value)}
-        style={{ padding: 8, fontSize: 16, width: '100%', marginBottom: 20 }}
+        style={{ width: '100%', padding: 8, fontSize: 16, marginBottom: 16 }}
       />
-      {competenciesSample.map((strand) => (
-        <div key={strand.strand} style={{ marginBottom: 20 }}>
-          <h2>{strand.strand}</h2>
-          {strand.competencies.map((comp) => (
-            <div key={comp.id} style={{ marginBottom: 10 }}>
+      <select
+        value={program}
+        onChange={(e) => setProgram(e.target.value)}
+        style={{ width: '100%', padding: 8, fontSize: 16, marginBottom: 16 }}
+      >
+        <option value="">Select CTE Program</option>
+        {programs.map((prog) => (
+          <option key={prog} value={prog}>{prog}</option>
+        ))}
+      </select>
+      {sampleCompetencies[program] && (
+        <div>
+          <h2>Competencies for {program}</h2>
+          {sampleCompetencies[program].map((comp) => (
+            <div key={comp.id} style={{ marginBottom: 12 }}>
               <p><strong>{comp.description}</strong></p>
               <textarea
-                placeholder="Enter progress notes"
-                value={progress[comp.id] || ""}
-                onChange={(e) => updateProgress(comp.id, e.target.value)}
-                style={{ width: '100%', height: 60 }}
+                rows={3}
+                value={progress[comp.id] || ''}
+                onChange={(e) => handleNoteChange(comp.id, e.target.value)}
+                style={{ width: '100%' }}
               />
             </div>
           ))}
         </div>
-      ))}
-      <button onClick={() => alert(`Progress saved for ${studentName}`)}>Save Progress</button>
+      )}
+      <button onClick={handleSave} style={{ marginTop: 20, padding: 10, fontSize: 16 }}>
+        Save Progress
+      </button>
     </div>
   );
 }
