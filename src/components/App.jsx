@@ -23,18 +23,21 @@ export default function App() {
   const [studentName, setStudentName] = useState('');
   const [program, setProgram] = useState('');
   const [progress, setProgress] = useState({});
-
-  const handleSave = () => {
-    console.log({
-      studentName,
-      program,
-      progress
-    });
-    alert('Progress saved to console (Google Sheets coming soon)');
-  };
+  const [status, setStatus] = useState('');
 
   const handleNoteChange = (id, note) => {
     setProgress(prev => ({ ...prev, [id]: note }));
+  };
+
+  const handleSave = () => {
+    const data = {
+      studentName,
+      program,
+      progress,
+      timestamp: new Date().toISOString()
+    };
+    console.log('Saving to Google Sheets (simulated):', data);
+    setStatus('✅ Progress saved (Google Sheets integration simulated)');
   };
 
   return (
@@ -75,6 +78,7 @@ export default function App() {
       <button onClick={handleSave} style={{ marginTop: 20, padding: 10, fontSize: 16 }}>
         Save Progress
       </button>
+      {status && <p style={{ marginTop: 16 }}>{status}</p>}
     </div>
   );
 }
