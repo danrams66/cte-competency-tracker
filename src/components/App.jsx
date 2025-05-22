@@ -29,16 +29,30 @@ export default function App() {
     setProgress(prev => ({ ...prev, [id]: note }));
   };
 
-  const handleSave = () => {
-    const data = {
-      studentName,
-      program,
-      progress,
-      timestamp: new Date().toISOString()
-    };
-    console.log('Saving to Google Sheets (simulated):', data);
-    setStatus('✅ Progress saved (Google Sheets integration simulated)');
+  const handleSave = async () => {
+  const data = {
+    studentName,
+    program,
+    progress,
+    timestamp: new Date().toISOString()
   };
+
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbzbfvnZWWjOSMiR-1S8RqED0wC7eqQLBqnIytA8FjWHLxo7UD9uA34zvaTIZYlBTBL-/exec", {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    setStatus('✅ Progress saved to Google Sheets');
+  } catch (err) {
+    console.error(err);
+    setStatus('❌ Failed to save');
+  }
+};
 
   return (
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
