@@ -1,84 +1,4 @@
-import React, { useState } from 'react';
-
-const programs = [
-  'Graphic Communications',
-  'Auto Technology',
-  'Metal Fabrication',
-  'Cosmetology',
-  'Culinary Arts',
-  'Carpentry',
-  'Electrical',
-  'HVAC',
-  'Plumbing',
-  'Medical Assisting',
-  'TV & Radio Broadcasting',
-  'Marketing',
-  'Computer Info Systems',
-  'Dental Assisting',
-  'Robotics',
-  'Criminal Justice',
-  'Early Education & Child Care',
-  'Environmental Science',
-  'Engineering'
-];
-
-const projects = [
-  'Button Pin Project',
-  'Gallery Art Collage',
-  'DTF Shirt Design',
-  'Signs / Vinyl Cutting',
-  'Book Making',
-  'Vehicle Wrap Design',
-  'Live Work / Customer Job',
-  'Employability / Shop Performance',
-  'Safety',
-  'Other'
-];
-
-const competencies = {
-  'Graphic Communications': [
-    {
-      id: 'GC-SAFETY-01',
-      description: 'Demonstrates safe use of tools, equipment, PPE, and shop procedures.'
-    },
-    {
-      id: 'GC-DESIGN-01',
-      description: 'Applies design principles such as layout, alignment, contrast, balance, typography, and color.'
-    },
-    {
-      id: 'GC-ILLUSTRATOR-01',
-      description: 'Uses Adobe Illustrator tools to create and prepare vector artwork.'
-    },
-    {
-      id: 'GC-PHOTOSHOP-01',
-      description: 'Uses Adobe Photoshop tools to edit, adjust, and prepare raster images.'
-    },
-    {
-      id: 'GC-FILESETUP-01',
-      description: 'Sets up files correctly using proper size, bleed, margins, resolution, and color mode.'
-    },
-    {
-      id: 'GC-PRINT-01',
-      description: 'Prepares artwork for digital print, wide-format print, DTF, vinyl, or other production output.'
-    },
-    {
-      id: 'GC-FINISHING-01',
-      description: 'Completes finishing tasks accurately, including cutting, trimming, pressing, assembly, or mounting.'
-    },
-    {
-      id: 'GC-CRAFT-01',
-      description: 'Produces clean, accurate, professional-quality finished work.'
-    },
-    {
-      id: 'GC-EMPLOY-01',
-      description: 'Demonstrates employability skills including effort, time management, teamwork, responsibility, and professionalism.'
-    },
-    {
-      id: 'GC-CUSTOMER-01',
-      description: 'Follows job directions and communicates appropriately for live work or customer-based projects.'
-    }
-  ]
-};
+import React, { useMemo, useState } from 'react';
 
 const scoreDescriptions = {
   '5': 'Independent workplace-level performance',
@@ -89,49 +9,223 @@ const scoreDescriptions = {
   '0': 'Practiced but cannot demonstrate yet'
 };
 
+const rosters = {
+  'Grade 9 Graphic Communications': {
+    gradeLevel: '9',
+    program: 'Graphic Communications',
+    students: ['Dan Test', 'Student One', 'Student Two', 'Student Three']
+  },
+  'Grade 10 Graphic Communications': {
+    gradeLevel: '10',
+    program: 'Graphic Communications',
+    students: ['Student Four', 'Student Five', 'Student Six']
+  },
+  'Grade 11 Graphic Communications': {
+    gradeLevel: '11',
+    program: 'Graphic Communications',
+    students: ['Student Seven', 'Student Eight', 'Student Nine']
+  },
+  'Grade 12 Graphic Communications': {
+    gradeLevel: '12',
+    program: 'Graphic Communications',
+    students: ['Student Ten', 'Student Eleven', 'Student Twelve']
+  }
+};
+
+const projects = {
+  'Button Pin Project': [
+    {
+      id: 'GC-SAFETY-01',
+      shortName: 'Safety',
+      description: 'Demonstrates safe use of tools, equipment, PPE, and shop procedures.'
+    },
+    {
+      id: 'GC-FILESETUP-01',
+      shortName: 'File Setup',
+      description: 'Sets up files correctly using proper size, bleed, margins, resolution, and color mode.'
+    },
+    {
+      id: 'GC-ILLUSTRATOR-01',
+      shortName: 'Illustrator',
+      description: 'Uses Adobe Illustrator tools to create and prepare vector artwork.'
+    },
+    {
+      id: 'GC-DESIGN-01',
+      shortName: 'Design',
+      description: 'Applies design principles such as layout, alignment, contrast, balance, typography, and color.'
+    },
+    {
+      id: 'GC-CRAFT-01',
+      shortName: 'Craft',
+      description: 'Produces clean, accurate, professional-quality finished work.'
+    },
+    {
+      id: 'GC-EMPLOY-01',
+      shortName: 'Employability',
+      description: 'Demonstrates effort, time management, teamwork, responsibility, and professionalism.'
+    }
+  ],
+
+  'Gallery Art Collage': [
+    {
+      id: 'GC-SAFETY-01',
+      shortName: 'Safety',
+      description: 'Demonstrates safe use of tools, equipment, PPE, and shop procedures.'
+    },
+    {
+      id: 'GC-PHOTOSHOP-01',
+      shortName: 'Photoshop',
+      description: 'Uses Adobe Photoshop tools to edit, adjust, and prepare raster images.'
+    },
+    {
+      id: 'GC-DESIGN-01',
+      shortName: 'Design',
+      description: 'Applies design principles such as layout, alignment, contrast, balance, typography, and color.'
+    },
+    {
+      id: 'GC-PRINT-01',
+      shortName: 'Print Prep',
+      description: 'Prepares artwork for digital print, wide-format print, DTF, vinyl, or other production output.'
+    },
+    {
+      id: 'GC-FINISHING-01',
+      shortName: 'Finishing',
+      description: 'Completes finishing tasks accurately, including cutting, trimming, pressing, assembly, or mounting.'
+    },
+    {
+      id: 'GC-CRAFT-01',
+      shortName: 'Craft',
+      description: 'Produces clean, accurate, professional-quality finished work.'
+    }
+  ],
+
+  'DTF Shirt Design': [
+    {
+      id: 'GC-SAFETY-01',
+      shortName: 'Safety',
+      description: 'Demonstrates safe use of tools, equipment, PPE, and shop procedures.'
+    },
+    {
+      id: 'GC-DESIGN-01',
+      shortName: 'Design',
+      description: 'Applies design principles such as layout, alignment, contrast, balance, typography, and color.'
+    },
+    {
+      id: 'GC-ILLUSTRATOR-01',
+      shortName: 'Illustrator',
+      description: 'Uses Adobe Illustrator tools to create and prepare vector artwork.'
+    },
+    {
+      id: 'GC-FILESETUP-01',
+      shortName: 'File Setup',
+      description: 'Sets up files correctly using proper size, bleed, margins, resolution, and color mode.'
+    },
+    {
+      id: 'GC-PRINT-01',
+      shortName: 'Production',
+      description: 'Prepares artwork for digital print, wide-format print, DTF, vinyl, or other production output.'
+    },
+    {
+      id: 'GC-CRAFT-01',
+      shortName: 'Craft',
+      description: 'Produces clean, accurate, professional-quality finished work.'
+    }
+  ],
+
+  'Employability / Shop Performance': [
+    {
+      id: 'GC-EMPLOY-01',
+      shortName: 'Professionalism',
+      description: 'Demonstrates effort, time management, teamwork, responsibility, and professionalism.'
+    },
+    {
+      id: 'GC-SAFETY-01',
+      shortName: 'Safety',
+      description: 'Demonstrates safe use of tools, equipment, PPE, and shop procedures.'
+    },
+    {
+      id: 'GC-CUSTOMER-01',
+      shortName: 'Directions',
+      description: 'Follows job directions and communicates appropriately for live work or customer-based projects.'
+    }
+  ]
+};
+
 export default function App() {
-  const [studentName, setStudentName] = useState('');
-  const [gradeLevel, setGradeLevel] = useState('');
-  const [program, setProgram] = useState('Graphic Communications');
-  const [project, setProject] = useState('');
-  const [competencyId, setCompetencyId] = useState('');
-  const [score, setScore] = useState('');
-  const [notes, setNotes] = useState('');
+  const [selectedRosterName, setSelectedRosterName] = useState('');
+  const [selectedProjectName, setSelectedProjectName] = useState('');
+  const [scores, setScores] = useState({});
+  const [notes, setNotes] = useState({});
+  const [activeInfo, setActiveInfo] = useState(null);
   const [status, setStatus] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
-  const selectedCompetencies = competencies[program] || [];
-  const selectedCompetency = selectedCompetencies.find(
-    (comp) => comp.id === competencyId
-  );
+  const selectedRoster = rosters[selectedRosterName];
+  const selectedCompetencies = projects[selectedProjectName] || [];
 
-  const resetForm = () => {
-    setProject('');
-    setCompetencyId('');
-    setScore('');
-    setNotes('');
+  const scoreKey = (studentName, competencyId) => `${studentName}__${competencyId}`;
+
+  const hasGrid = selectedRoster && selectedProjectName && selectedCompetencies.length > 0;
+
+  const totalEnteredScores = useMemo(() => {
+    return Object.values(scores).filter((value) => value !== '').length;
+  }, [scores]);
+
+  const handleScoreChange = (studentName, competencyId, value) => {
+    setScores((prev) => ({
+      ...prev,
+      [scoreKey(studentName, competencyId)]: value
+    }));
   };
 
-  const handleSave = async () => {
+  const handleNoteChange = (studentName, value) => {
+    setNotes((prev) => ({
+      ...prev,
+      [studentName]: value
+    }));
+  };
+
+  const clearGrid = () => {
+    setScores({});
+    setNotes({});
+    setStatus('');
+  };
+
+  const handleSaveAll = async () => {
     setStatus('');
 
-    if (!studentName || !gradeLevel || !program || !project || !competencyId || score === '') {
-      setStatus('⚠️ Please complete all required fields before saving.');
+    if (!hasGrid) {
+      setStatus('⚠️ Please select a roster and project first.');
       return;
     }
 
-    const data = {
-      studentName,
-      gradeLevel,
-      program,
-      project,
-      competencyId,
-      competencyDescription: selectedCompetency?.description || '',
-      score,
-      scoreDescription: scoreDescriptions[score],
-      notes,
-      timestamp: new Date().toISOString()
-    };
+    const records = [];
+
+    selectedRoster.students.forEach((studentName) => {
+      selectedCompetencies.forEach((competency) => {
+        const value = scores[scoreKey(studentName, competency.id)];
+
+        if (value !== undefined && value !== '') {
+          records.push({
+            studentName,
+            gradeLevel: selectedRoster.gradeLevel,
+            program: selectedRoster.program,
+            project: selectedProjectName,
+            competencyId: competency.id,
+            competencyDescription: competency.description,
+            score: value,
+            scoreDescription: scoreDescriptions[value],
+            notes: notes[studentName] || '',
+            timestamp: new Date().toISOString()
+          });
+        }
+      });
+    });
+
+    if (records.length === 0) {
+      setStatus('⚠️ No scores entered. Enter at least one score before saving.');
+      return;
+    }
 
     try {
       setIsSaving(true);
@@ -144,12 +238,11 @@ export default function App() {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify({ records })
         }
       );
 
-      setStatus('✅ Competency score saved.');
-      resetForm();
+      setStatus(`✅ Saved ${records.length} competency score record(s).`);
     } catch (error) {
       console.error(error);
       setStatus('❌ Save failed. Check the Apps Script / Google Sheet connection.');
@@ -164,128 +257,170 @@ export default function App() {
         <header style={styles.header}>
           <h1 style={styles.title}>CTE Competency Tracker</h1>
           <p style={styles.subtitle}>
-            Teacher-only tracker for recording student competency progress.
+            Teacher scoring grid for recording multiple student competencies at once.
           </p>
         </header>
 
         <section style={styles.card}>
-          <h2 style={styles.sectionTitle}>Student Information</h2>
+          <h2 style={styles.sectionTitle}>Setup</h2>
 
-          <label style={styles.label}>Student Name *</label>
-          <input
-            type="text"
-            placeholder="Enter student name"
-            value={studentName}
-            onChange={(e) => setStudentName(e.target.value)}
-            style={styles.input}
-          />
-
-          <label style={styles.label}>Grade Level *</label>
-          <select
-            value={gradeLevel}
-            onChange={(e) => setGradeLevel(e.target.value)}
-            style={styles.input}
-          >
-            <option value="">Select grade level</option>
-            <option value="9">Grade 9</option>
-            <option value="10">Grade 10</option>
-            <option value="11">Grade 11</option>
-            <option value="12">Grade 12</option>
-          </select>
-
-          <label style={styles.label}>CTE Program *</label>
-          <select
-            value={program}
-            onChange={(e) => {
-              setProgram(e.target.value);
-              setCompetencyId('');
-            }}
-            style={styles.input}
-          >
-            {programs.map((prog) => (
-              <option key={prog} value={prog}>
-                {prog}
-              </option>
-            ))}
-          </select>
-        </section>
-
-        <section style={styles.card}>
-          <h2 style={styles.sectionTitle}>Competency Record</h2>
-
-          <label style={styles.label}>Project / Unit *</label>
-          <select
-            value={project}
-            onChange={(e) => setProject(e.target.value)}
-            style={styles.input}
-          >
-            <option value="">Select project or unit</option>
-            {projects.map((proj) => (
-              <option key={proj} value={proj}>
-                {proj}
-              </option>
-            ))}
-          </select>
-
-          <label style={styles.label}>Competency *</label>
-          <select
-            value={competencyId}
-            onChange={(e) => setCompetencyId(e.target.value)}
-            style={styles.input}
-          >
-            <option value="">Select competency</option>
-            {selectedCompetencies.map((comp) => (
-              <option key={comp.id} value={comp.id}>
-                {comp.id} — {comp.description}
-              </option>
-            ))}
-          </select>
-
-          {selectedCompetency && (
-            <div style={styles.competencyBox}>
-              <strong>{selectedCompetency.id}</strong>
-              <p style={{ margin: '6px 0 0' }}>{selectedCompetency.description}</p>
+          <div style={styles.setupGrid}>
+            <div>
+              <label style={styles.label}>Class / Roster</label>
+              <select
+                value={selectedRosterName}
+                onChange={(e) => {
+                  setSelectedRosterName(e.target.value);
+                  clearGrid();
+                }}
+                style={styles.input}
+              >
+                <option value="">Select roster</option>
+                {Object.keys(rosters).map((rosterName) => (
+                  <option key={rosterName} value={rosterName}>
+                    {rosterName}
+                  </option>
+                ))}
+              </select>
             </div>
+
+            <div>
+              <label style={styles.label}>Project / Assignment</label>
+              <select
+                value={selectedProjectName}
+                onChange={(e) => {
+                  setSelectedProjectName(e.target.value);
+                  clearGrid();
+                }}
+                style={styles.input}
+              >
+                <option value="">Select project</option>
+                {Object.keys(projects).map((projectName) => (
+                  <option key={projectName} value={projectName}>
+                    {projectName}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {selectedRoster && (
+            <p style={styles.helperText}>
+              Selected: <strong>{selectedRoster.program}</strong>, Grade{' '}
+              <strong>{selectedRoster.gradeLevel}</strong>,{' '}
+              <strong>{selectedRoster.students.length}</strong> students
+            </p>
           )}
-
-          <label style={styles.label}>Teacher Score *</label>
-          <select
-            value={score}
-            onChange={(e) => setScore(e.target.value)}
-            style={styles.input}
-          >
-            <option value="">Select score</option>
-            <option value="5">5 — Independent workplace-level performance</option>
-            <option value="4">4 — Minimal help / close to proficient</option>
-            <option value="3">3 — Can do with supervision or assistance</option>
-            <option value="2">2 — Limited ability / needs more instruction</option>
-            <option value="1">1 — Introduced only</option>
-            <option value="0">0 — Practiced but cannot demonstrate yet</option>
-          </select>
-
-          <label style={styles.label}>Evidence / Notes</label>
-          <textarea
-            rows="5"
-            placeholder="Example: Student created a clean 3.5-inch button design with correct safe area and minor help with alignment."
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            style={styles.textarea}
-          />
-
-          <button
-            onClick={handleSave}
-            disabled={isSaving}
-            style={{
-              ...styles.button,
-              opacity: isSaving ? 0.7 : 1,
-              cursor: isSaving ? 'not-allowed' : 'pointer'
-            }}
-          >
-            {isSaving ? 'Saving...' : 'Save Competency Score'}
-          </button>
-
-          {status && <p style={styles.status}>{status}</p>}
         </section>
+
+        {hasGrid && (
+          <section style={styles.card}>
+            <div style={styles.gridHeader}>
+              <div>
+                <h2 style={styles.sectionTitle}>{selectedProjectName}</h2>
+                <p style={styles.helperText}>
+                  Enter scores for the competencies you assessed. Leave blank if not assessed.
+                </p>
+              </div>
+
+              <div style={styles.buttonGroup}>
+                <button onClick={clearGrid} style={styles.secondaryButton}>
+                  Clear
+                </button>
+                <button
+                  onClick={handleSaveAll}
+                  disabled={isSaving}
+                  style={{
+                    ...styles.button,
+                    opacity: isSaving ? 0.7 : 1,
+                    cursor: isSaving ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  {isSaving ? 'Saving...' : 'Save Class Scores'}
+                </button>
+              </div>
+            </div>
+
+            <div style={styles.tableWrapper}>
+              <table style={styles.table}>
+                <thead>
+                  <tr>
+                    <th style={styles.stickyStudentHeader}>Student</th>
+
+                    {selectedCompetencies.map((competency) => (
+                      <th key={competency.id} style={styles.th}>
+                        <span>{competency.shortName}</span>{' '}
+                        <button
+                          type="button"
+                          style={styles.infoButton}
+                          title={competency.description}
+                          onClick={() =>
+                            setActiveInfo(activeInfo === competency.id ? null : competency.id)
+                          }
+                        >
+                          ⓘ
+                        </button>
+
+                        {activeInfo === competency.id && (
+                          <div style={styles.infoBox}>
+                            <strong>{competency.id}</strong>
+                            <p style={{ margin: '6px 0 0' }}>{competency.description}</p>
+                          </div>
+                        )}
+                      </th>
+                    ))}
+
+                    <th style={styles.th}>Notes</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {selectedRoster.students.map((studentName) => (
+                    <tr key={studentName}>
+                      <td style={styles.studentCell}>{studentName}</td>
+
+                      {selectedCompetencies.map((competency) => (
+                        <td key={competency.id} style={styles.td}>
+                          <select
+                            value={scores[scoreKey(studentName, competency.id)] || ''}
+                            onChange={(e) =>
+                              handleScoreChange(studentName, competency.id, e.target.value)
+                            }
+                            style={styles.scoreSelect}
+                          >
+                            <option value="">—</option>
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                            <option value="0">0</option>
+                          </select>
+                        </td>
+                      ))}
+
+                      <td style={styles.notesCell}>
+                        <input
+                          type="text"
+                          placeholder="Optional notes"
+                          value={notes[studentName] || ''}
+                          onChange={(e) => handleNoteChange(studentName, e.target.value)}
+                          style={styles.noteInput}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p style={styles.helperText}>
+              Scores entered: <strong>{totalEnteredScores}</strong>
+            </p>
+
+            {status && <p style={styles.status}>{status}</p>}
+          </section>
+        )}
 
         <section style={styles.card}>
           <h2 style={styles.sectionTitle}>Rating Scale</h2>
@@ -311,7 +446,7 @@ const styles = {
     padding: '24px'
   },
   container: {
-    maxWidth: '850px',
+    maxWidth: '1200px',
     margin: '0 auto',
     fontFamily: 'Arial, sans-serif'
   },
@@ -337,12 +472,17 @@ const styles = {
   },
   sectionTitle: {
     marginTop: 0,
+    marginBottom: '8px',
     color: '#1f2937'
+  },
+  setupGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+    gap: '16px'
   },
   label: {
     display: 'block',
     fontWeight: 'bold',
-    marginTop: '14px',
     marginBottom: '6px'
   },
   input: {
@@ -353,32 +493,130 @@ const styles = {
     border: '1px solid #ccc',
     boxSizing: 'border-box'
   },
-  textarea: {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-    borderRadius: '6px',
-    border: '1px solid #ccc',
-    boxSizing: 'border-box',
-    resize: 'vertical'
-  },
-  competencyBox: {
-    background: '#eef6ff',
-    border: '1px solid #b8dcff',
-    padding: '12px',
-    borderRadius: '8px',
+  helperText: {
+    color: '#555',
     marginTop: '12px'
   },
+  gridHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '16px',
+    alignItems: 'flex-start',
+    flexWrap: 'wrap'
+  },
+  buttonGroup: {
+    display: 'flex',
+    gap: '10px',
+    flexWrap: 'wrap'
+  },
   button: {
-    marginTop: '18px',
-    width: '100%',
-    padding: '12px',
-    fontSize: '16px',
+    padding: '10px 14px',
+    fontSize: '15px',
     fontWeight: 'bold',
     borderRadius: '8px',
     border: 'none',
     background: '#2563eb',
     color: '#ffffff'
+  },
+  secondaryButton: {
+    padding: '10px 14px',
+    fontSize: '15px',
+    fontWeight: 'bold',
+    borderRadius: '8px',
+    border: '1px solid #bbb',
+    background: '#ffffff',
+    color: '#333',
+    cursor: 'pointer'
+  },
+  tableWrapper: {
+    overflowX: 'auto',
+    marginTop: '18px',
+    border: '1px solid #ddd',
+    borderRadius: '10px'
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+    minWidth: '900px'
+  },
+  th: {
+    position: 'relative',
+    background: '#f1f5f9',
+    padding: '10px',
+    borderBottom: '1px solid #ddd',
+    borderRight: '1px solid #ddd',
+    textAlign: 'center',
+    whiteSpace: 'nowrap'
+  },
+  stickyStudentHeader: {
+    position: 'sticky',
+    left: 0,
+    zIndex: 2,
+    background: '#e5e7eb',
+    padding: '10px',
+    borderBottom: '1px solid #ddd',
+    borderRight: '1px solid #ddd',
+    textAlign: 'left',
+    minWidth: '180px'
+  },
+  studentCell: {
+    position: 'sticky',
+    left: 0,
+    zIndex: 1,
+    background: '#ffffff',
+    padding: '10px',
+    borderBottom: '1px solid #eee',
+    borderRight: '1px solid #ddd',
+    fontWeight: 'bold',
+    minWidth: '180px'
+  },
+  td: {
+    padding: '8px',
+    borderBottom: '1px solid #eee',
+    borderRight: '1px solid #eee',
+    textAlign: 'center'
+  },
+  notesCell: {
+    padding: '8px',
+    borderBottom: '1px solid #eee',
+    minWidth: '220px'
+  },
+  scoreSelect: {
+    width: '64px',
+    padding: '6px',
+    fontSize: '15px'
+  },
+  noteInput: {
+    width: '100%',
+    padding: '7px',
+    borderRadius: '6px',
+    border: '1px solid #ccc',
+    boxSizing: 'border-box'
+  },
+  infoButton: {
+    border: 'none',
+    background: 'transparent',
+    color: '#2563eb',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    fontSize: '15px'
+  },
+  infoBox: {
+    position: 'absolute',
+    top: '36px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: '260px',
+    background: '#ffffff',
+    color: '#111827',
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    padding: '10px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.18)',
+    zIndex: 10,
+    whiteSpace: 'normal',
+    textAlign: 'left',
+    fontWeight: 'normal'
   },
   status: {
     marginTop: '14px',
